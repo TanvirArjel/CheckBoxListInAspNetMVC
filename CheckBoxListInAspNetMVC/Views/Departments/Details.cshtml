@@ -1,0 +1,43 @@
+﻿@model CheckBoxListInAspNetMVC.Models.Department
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<style>
+    
+     ul li {
+         float: left;
+         width: 100px;
+         list-style-type: disc;
+     }
+</style>
+
+<h3>Details | Department </h3>
+<hr/>
+
+<div>
+    <div class="input-group input-group-lg ">
+        @Html.LabelFor(model => model.Name, new {@class = "input-group-addon"})
+        <div class="form-control">
+            @Html.DisplayFor(model => model.Name)
+        </div>
+    </div>
+    <br/>
+    <div class="input-group input-group-lg">
+        <label class="input-group-addon">Courses</label>
+        <div class="form-control">
+            <ul>
+                @foreach (var item in Model.Courses)
+                {
+                    <li>@item.Name</li>
+                }
+            </ul>
+        </div>
+    </div>
+</div>
+<br/>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }, new {@class = "btn btn-default"}) |
+    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-default" })
+</p>

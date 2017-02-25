@@ -1,0 +1,50 @@
+﻿@model IEnumerable<CheckBoxListInAspNetMVC.Models.Course>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h3>List | All Courses</h3>
+
+<p>
+    @Html.ActionLink("Create New", "Create", null, new {@class = "btn btn-default"})
+</p>
+<hr/>
+
+<table class="table table-bordered table-striped">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            Departments
+        </th>
+        <th>Actions</th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @{
+                var count = item.Departments.Count;
+                foreach (var dept in item.Departments)
+                {
+                    @dept.Name
+                    if (--count > 0)
+                    {
+                       @:|
+                    }
+                }
+            } 
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,115 @@
+﻿@model CheckBoxListInAspNetMVC.Models.Student
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h3>Create | Student</h3>
+<hr/>
+
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <div class="col-md-2 input-label">
+                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label" })
+            </div>
+            
+            <div class="col-md-10 input-box">
+                @Html.EditorFor(model => model.Name, new {htmlAttributes = new {@class = "form-control"}})
+                @Html.ValidationMessageFor(model => model.Name, "", new {@class = "text-danger"})
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-2 input-label">
+                @Html.LabelFor(model => model.Department.Name, htmlAttributes: new { @class = "control-label" })
+            </div>
+                <div class="col-md-10 input-box">
+                    @Html.DropDownList("DepartmentId", null, "Select Department", new { @class = "form-control", id = "DepartmentId" })
+                    @Html.ValidationMessageFor(model => model.DepartmentId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        
+        <div class="form-group">
+            <div class="col-md-2 input-label">
+                <label class="control-label">Courses</label>
+            </div>
+            
+            <div class="col-md-10 input-box">
+                <div class="form-control" id="checkboxDiv">
+
+                </div>
+            </div>
+        </div>
+       
+
+        <div class="form-group">
+            <div class="col-md-2 input-label">
+                @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label" })
+            </div>
+            
+            <div class="col-md-10 input-box">
+                @Html.EditorFor(model => model.Email, new {htmlAttributes = new {@class = "form-control"}})
+                @Html.ValidationMessageFor(model => model.Email, "", new {@class = "text-danger"})
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-12">
+                <input type="submit" value="Create" class="btn btn-default" /> | 
+                <span>@Html.ActionLink("Back to List", "Index", null, new {@class="btn btn-default"})</span>
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("#DepartmentId").on("change",
+            function () {
+                var departmentId = $("#DepartmentId").val();
+                $("#checkboxDiv").empty();
+                $.ajax({
+                    url: '/Students/SendCourseById',
+                    type: "GET",
+                    data: { id: departmentId },
+                    dataType: "json",
+                    async: true,
+                    success: function (data) {
+                        var count = data.length;
+                        var inputs = "";
+                        $.each(data,
+                            function () {
+                                if (--count > 0) {
+                                    var separator = '|';
+                                } else {
+                                    separator = '';
+                                }
+                                inputs += '<input type="checkbox" name="selectedCourses" value="' +
+                                    this.Id +
+                                    '">' +
+                                    ' ' +
+                                    this.Name +' '+ separator + ' ';
+                            });
+
+                        $("#checkboxDiv").append(inputs);
+                    }
+                });
+            });
+        });
+        
+    </script>
+}

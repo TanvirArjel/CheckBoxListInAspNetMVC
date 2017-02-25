@@ -1,0 +1,70 @@
+﻿@model CheckBoxListInAspNetMVC.Models.Course
+
+@{
+    ViewBag.Title = "Edit | Course";
+}
+
+<h3>Edit | Course</h3>
+<hr />
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+
+        <div class="form-group">
+            <div class="col-md-2 input-label">
+                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label" })
+            </div>
+            
+            <div class="col-md-10 input-box">
+                @Html.EditorFor(model => model.Name, new {htmlAttributes = new {@class = "form-control"}})
+                @Html.ValidationMessageFor(model => model.Name, "", new {@class = "text-danger"})
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <div class="col-md-2 input-label">
+                <label class="control-label">Courses</label>
+            </div>
+            
+            <div class="col-md-10 input-box">
+                <div class="form-control">
+                    @{
+                        var count = Enumerable.Count(ViewBag.AllDepartments);
+                        foreach (var item in ViewBag.AllDepartments)
+                        {
+                            <input type="checkbox" name="selectedDepartments" value="@item.Id"
+                                   @if (Model.Departments.Any(p => p.Id == item.Id))
+                                   {
+                                       <text> Checked</text>
+                                   }/>
+                            @item.Name
+                            if (--count > 0)
+                            {
+                                @:|
+                            }
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index", null, new {@class = "btn btn-default"})
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
