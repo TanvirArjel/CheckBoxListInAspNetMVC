@@ -5,11 +5,12 @@
 }
 
 <style>
-    
+     ul {
+         margin-bottom: 0px;
+         padding-left: 0px;
+     }
      ul li {
-         float: left;
-         width: 100px;
-         list-style-type: disc;
+         display: inline;
      }
 </style>
 
@@ -17,20 +18,20 @@
 <hr/>
 
 <div>
-    <div class="input-group input-group-lg ">
+    <div class="input-group">
         @Html.LabelFor(model => model.Name, new {@class = "input-group-addon"})
         <div class="form-control">
             @Html.DisplayFor(model => model.Name)
         </div>
     </div>
     <br/>
-    <div class="input-group input-group-lg">
+    <div class="input-group">
         <label class="input-group-addon">Courses</label>
-        <div class="form-control">
+        <div class="form-control input-group-form-control">
             <ul>
                 @foreach (var item in Model.Courses)
                 {
-                    <li>@item.Name</li>
+                    <li>@item.Name</li> @:|
                 }
             </ul>
         </div>

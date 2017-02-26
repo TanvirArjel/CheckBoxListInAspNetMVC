@@ -17,14 +17,16 @@
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Id)
 
-        <div class="input-group">
+        <div class="input-group" style="width: 100%">
             @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "input-group-addon" })
-            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" }})
         </div>
         @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
         <br/>
         <div class="input-group">
+            
             <label class="input-group-addon">Course</label>
+          
             <div class="form-control">
                 @{
                     var count = Enumerable.Count(ViewBag.AllCourses);
@@ -32,14 +34,18 @@
                     {
 
                         <input type="checkbox" name="selectedCourses" value="@course.Id"
-                               @if (Model.Courses.Any(p => p.Id == course.Id)) { <text> Checked</text> } /> @course.Name
+                               @if (Model.Courses.Any(p => p.Id == course.Id))
+                               {
+                                   <text> Checked</text>
+                               }/>
+                        @course.Name
                         if (--count > 0)
                         {
-                           @:|
+                            @:|
                         }
-                     }
+                    }
                 }
-                
+
 
             </div>
         </div>

@@ -29,9 +29,6 @@ hr {
     border-top: 1px solid #ccc;
 }
 
-ul {
-   padding-left: 17px;
-}
 .input-label {
     padding-right: 0;
 }
@@ -48,4 +45,18 @@ ul {
     border-style: solid;
     border-color: #cccccc;
     border-width: 1px 0 1px 1px;
+}
+
+.input-group {
+    width: 100%;
+}
+
+.input-group-addon {
+    text-align: right;
+    width: 16.67%;
+    border-radius: 0;
+}
+
+.input-group-form-control {
+    width: 83.66%;
 }
